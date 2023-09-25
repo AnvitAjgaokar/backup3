@@ -9,7 +9,7 @@ import 'package:sem5demo3/ticket.dart';
 import 'client.dart';
 
 class ParkingSpotSelection extends StatefulWidget {
-  static String floorv = '';
+  static String floorv = 'Floor 1';
   static String spotv = '';
   @override
   _ParkingSpotSelectionState createState() => _ParkingSpotSelectionState();

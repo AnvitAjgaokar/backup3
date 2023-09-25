@@ -36,7 +36,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
 
     final String createCarMutation = '''
       mutation () {
-        createVehicle(modelname: "${_modelname.text}", platenum: "${_platenum.text}",fireid: "${mainfireid}") {
+        createVehicle(modelname: "${_modelname.text}", platenum: "${_platenum.text.toUpperCase()}",fireid: "${mainfireid}") {
           vehicle {
             modelname
             platenum
