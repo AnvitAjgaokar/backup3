@@ -2,7 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:sem5demo3/selectvehicle.dart';
 import 'package:sem5demo3/ticket.dart';
+
+import 'client.dart';
 
 class ParkingSpotSelection extends StatefulWidget {
   static String floorv = '';
@@ -20,6 +24,49 @@ class _ParkingSpotSelectionState extends State<ParkingSpotSelection> {
 
   String _selectedFloorValue = ''; // Variable to store the selected floor
   String _selectedSpotValue = '';
+
+  Future<void> _updateParkdetails() async {
+    print("Updating details!!");
+    final String updateDetailMutation = '''
+      mutation() {
+        updateParkdetails(inputData: {
+          detailId: "${SelectVehicle.maindetailiddd.toString()}"
+          floornum: "${ParkingSpotSelection.floorv.toString()}",
+          spotnum: "${ParkingSpotSelection.spotv.toString()}"
+    
+        }) {
+          detail {
+            id
+            floornum
+            spotnum
+
+          }
+        }
+      }
+
+    ''';
+    // final HttpLink httpLink = HttpLink(
+    //     'http://192.168.43.12:8000/graphql/'); // Replace with your GraphQL API URL
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: httpLink,
+    );
+
+    final MutationOptions options = MutationOptions(
+      document: gql(updateDetailMutation),
+      // variables: {'id': userId},
+    );
+
+    final QueryResult result = await client.mutate(options);
+
+    if (result.hasException) {
+      print('Error updating Details: ${result.exception.toString()}');
+    } else {
+      print('Details updated successfully');
+    }
+  }
+
 
 
   @override
@@ -353,8 +400,44 @@ class _ParkingSpotSelectionState extends State<ParkingSpotSelection> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Get.to(ParkingTicket());
                     // print("Floor ${ParkingSpotSelection.floorv}\nspotval ${ParkingSpotSelection.spotv}");
+                    if (ParkingSpotSelection.spotv == 'NA'){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red.shade100,
+                          duration: Duration(seconds: 3),
+                          showCloseIcon: true,
+                          closeIconColor: Colors.white,
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Unavailable!!',
+
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'The Spot is Already Booked',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  color: Colors.red.shade400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else {
+                      _updateParkdetails();
+                      Get.to(ParkingTicket());
+
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

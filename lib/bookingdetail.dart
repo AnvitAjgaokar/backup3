@@ -196,6 +196,7 @@ class _BookingDetailsState extends State<BookingDetails> {
               // Get.offAll(() => SignUpFormWidget(),
               //     transition: Transition.cupertinoDialog, duration: Duration(seconds: 1));
               // Go back when the back button is pressed
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back),
             color: Colors.black,

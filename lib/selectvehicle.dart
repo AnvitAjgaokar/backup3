@@ -42,7 +42,7 @@ class _SelectVehicleState extends State<SelectVehicle> {
   int selectedIndex = -1; // Store the selected tile index
 
   final String getDetailidQuery = r'''
-    query($fireid: String!, $todaydate: String, $parkingname: String!) {
+    query($fireid: String!, $todaydate: String!, $parkingname: String!) {
       parkingdetailbymulti(fireid: $fireid, todaydate: $todaydate, parkingname: $parkingname) {
         id
       }
