@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sem5demo3/client.dart';
+import 'package:sem5demo3/summary.dart';
 import 'package:sizer/sizer.dart';
 
 class Ewallet extends StatefulWidget {
@@ -261,7 +263,7 @@ class _EwalletState extends State<Ewallet> {
               ],),
             ),
 
-            const SizedBox(height: 140,),
+            const SizedBox(height: 100,),
 
             Container(
               width: double.infinity,
@@ -362,6 +364,8 @@ class _EwalletState extends State<Ewallet> {
                                       padding: const EdgeInsets.only(left: 20, right: 20),
                                       child: ElevatedButton(
                                         onPressed: () {
+                                          Navigator.pop(context);
+
                                           var options = {
                                             'key': 'rzp_test_srxx5ZiaXSlqeq',
                                             'amount':int.parse(_walletController.text.trim())*100,
@@ -413,6 +417,27 @@ class _EwalletState extends State<Ewallet> {
                 ),
               ),
             ),
+
+            // SizedBox(height: 20,),
+            // Container(
+            //   width: double.infinity,
+            //   height: 45,
+            //   padding: const EdgeInsets.only(left: 20, right: 20),
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       Get.offAll(SummaryPage());
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       shape: const StadiumBorder(),
+            //       backgroundColor: Colors.blueAccent.shade700,
+            //       elevation: 9,
+            //     ),
+            //     child: Text(
+            //       'Go Back to booking',
+            //       style: GoogleFonts.poppins(fontSize: 15),
+            //     ),
+            //   ),
+            // ),
 
 
 

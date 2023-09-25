@@ -86,6 +86,8 @@ class _MainSavePageState extends State<MainSavePage> {
     }
   ''';
 
+  bool _toggle = false;
+
   @override
   void initState() {
     super.initState();
@@ -162,7 +164,7 @@ class _MainSavePageState extends State<MainSavePage> {
               }
 
               if (result.isLoading) {
-                return LoadingPageOne();
+                return const LoadingPageOne();
               }
 
               dataList = result.data?['savedbyfireid'] ?? [];
@@ -172,8 +174,18 @@ class _MainSavePageState extends State<MainSavePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("assets/images/search_list_svg.svg",height: 200,width:200,),
-                      SizedBox(height: 10,),
+                      GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              _toggle = !_toggle;
+                            });
+                          },
+                          child: SvgPicture.asset(
+                        "assets/images/search_list_svg.svg",
+                        height: 200,
+                        width: 200,
+                      )),
+                      const SizedBox(height: 10,),
                       Text("There are no Saved Parking Lots",style: GoogleFonts.poppins(fontSize: 15),)
                       
                     ],
@@ -182,6 +194,18 @@ class _MainSavePageState extends State<MainSavePage> {
               }
               return Column(
                 children: [
+
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        _toggle = !_toggle;
+                      });
+                    },
+                    child: const SizedBox(
+                      height: 20,
+                      width: double.infinity,
+                    ),
+                  ),
                   // Padding(
                   //   padding: const EdgeInsets.all(12),
                   //   child: Focus(
@@ -319,7 +343,7 @@ class _MainSavePageState extends State<MainSavePage> {
                                                   Container(
                                                     width: 180,
                                                     height: 45,
-                                                    padding: EdgeInsets.only(left: 20, right: 20),
+                                                    padding: const EdgeInsets.only(left: 20, right: 20),
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         Navigator.pop(context);
@@ -330,7 +354,7 @@ class _MainSavePageState extends State<MainSavePage> {
                                                             fontSize: 15, color: Colors.blueAccent.shade700),
                                                       ),
                                                       style: ElevatedButton.styleFrom(
-                                                          shape: StadiumBorder(),
+                                                          shape: const StadiumBorder(),
                                                           backgroundColor:
                                                           Colors.blueAccent.shade200.withOpacity(0.2),
                                                           elevation: 0),
@@ -339,7 +363,7 @@ class _MainSavePageState extends State<MainSavePage> {
                                                   Container(
                                                     width: 180,
                                                     height: 45,
-                                                    padding: EdgeInsets.only(left: 20, right: 20),
+                                                    padding: const EdgeInsets.only(left: 20, right: 20),
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         // Get.to(() => VehicleSelectionPage(),
@@ -354,7 +378,7 @@ class _MainSavePageState extends State<MainSavePage> {
                                                             fontSize: 13, color: Colors.white),
                                                       ),
                                                       style: ElevatedButton.styleFrom(
-                                                        shape: StadiumBorder(),
+                                                        shape: const StadiumBorder(),
                                                         backgroundColor: Colors.blueAccent.shade700,
                                                       ),
                                                     ),

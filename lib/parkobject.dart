@@ -33,11 +33,12 @@ class _ParkingOneState extends State<ParkingOne> {
 
     final String createDetailtMutation = '''
       mutation () {
-        createParkingdetail(fireid: "${mainfireid.toString()}", todaydate: "${mainnow.toString()}", parkingname: "${_name.toString()}") {
+        createParkingdetail(fireid: "${mainfireid.toString()}", todaydate: "${mainnow.toString()}", parkingname: "${_name.toString()}", address: "${_address.toString()}") {
           parkingdetail {
             id
             fireid
             parkingname
+            address
      
 
           }
