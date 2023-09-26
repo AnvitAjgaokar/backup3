@@ -128,32 +128,32 @@ class _MainSavePageState extends State<MainSavePage> {
     return GraphQLProvider(
       client: client,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Saved',
-            style: GoogleFonts.poppins(
-              color: Colors.black,
-              fontSize: 20,
+          appBar: AppBar(
+            title: Text(
+              'Saved',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 20,
+              ),
             ),
+            leading: IconButton(
+              padding: const EdgeInsets.only(left: 15),
+              onPressed: () {
+                // Handle the back button action
+              },
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
+            ),
+            backgroundColor: Colors.transparent,
+            bottomOpacity: 0,
+            elevation: 0,
           ),
-          leading: IconButton(
-            padding: const EdgeInsets.only(left: 15),
-            onPressed: () {
-              // Handle the back button action
-            },
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0,
-          elevation: 0,
-        ),
-        body: Query(options: QueryOptions(
-          document: gql(getSavedQuery),
-          // variables: {'id': NewAcountone.idvaluee},
-          variables: {'fireid':fireid},
+          body: Query(options: QueryOptions(
+            document: gql(getSavedQuery),
+            // variables: {'id': NewAcountone.idvaluee},
+            variables: {'fireid':fireid},
 
-        ),
+          ),
             builder: (QueryResult result, {fetchMore, refetch}) {
               if (result.hasException) {
                 print(result.exception.toString());
@@ -181,13 +181,13 @@ class _MainSavePageState extends State<MainSavePage> {
                             });
                           },
                           child: SvgPicture.asset(
-                        "assets/images/search_list_svg.svg",
-                        height: 200,
-                        width: 200,
-                      )),
+                            "assets/images/search_list_svg.svg",
+                            height: 200,
+                            width: 200,
+                          )),
                       const SizedBox(height: 10,),
                       Text("There are no Saved Parking Lots",style: GoogleFonts.poppins(fontSize: 15),)
-                      
+
                     ],
                   ),
                 );
@@ -402,7 +402,7 @@ class _MainSavePageState extends State<MainSavePage> {
                 ],
               );
             },
-        )
+          )
       ),
     );
   }

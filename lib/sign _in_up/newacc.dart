@@ -227,255 +227,125 @@ class _NewAcountoneState extends State<NewAcountone> {
     );
 
     // final controller = Get.find<TextEditingController>();
-    return GraphQLProvider(
-      client: client,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Fill Your Profile",
-            style: GoogleFonts.poppins(color: Colors.black, fontSize: 20),
-          ),
-          leading: IconButton(
-            padding: const EdgeInsets.only(left: 15),
-            onPressed: () {},
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0,
-          elevation: 0,
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(children: [
-
-
-
-
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: CircleAvatar(
-                    radius: 75,
-                    backgroundColor: Colors.grey.shade300,
-                    backgroundImage: _image != null ? FileImage(_image!) : null,
-                    child: _image == null
-                        ? const Icon(
-                      Icons.person_2,
-                      size: 150,
-                      color: Colors.white,
-                    )
-                        : null,
-                  ),
-                ),
-                Positioned(
-                  bottom: 2,
-                  right: 110,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Select Profile Picture'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListTile(
-                                  leading: const Icon(Icons.photo),
-                                  title: const Text('Choose from Gallery'),
-                                  onTap: () {
-                                    _pickImage(ImageSource.gallery);
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                ListTile(
-                                  leading: const Icon(Icons.camera_alt),
-                                  title: const Text('Take a Photo'),
-                                  onTap: () {
-                                    _pickImage(ImageSource.camera);
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      primary: Colors.blueAccent.shade700,
-                      padding: const EdgeInsets.all(8),
-                      minimumSize: const Size(5, 5),
-                    ),
-                    child: const Icon(Icons.edit, size: 20),
-                  ),
-                ),
-              ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: GraphQLProvider(
+        client: client,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Fill Your Profile",
+              style: GoogleFonts.poppins(color: Colors.black, fontSize: 20),
             ),
-            const SizedBox(
-              height: 25,
-            ),
-            Container(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                height: 7.0.h,
-                child:
-                // Note: Same code is applied for the TextFormField as well
-                TextField(
-                  controller: _nameController,
-                  focusNode: _nameFocusNode,
-                  decoration: InputDecoration(
-                    hintText: "Full Name",
-                    hintStyle: GoogleFonts.poppins(
-                        color: Colors.grey.shade600, fontSize: 14),
-                    filled: true,
-                    fillColor: _name
-                        ? Colors.blueAccent.shade200.withOpacity(0.2)
-                        : Colors.grey.shade600.withOpacity(0.2),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.0,
-                        color: _name
-                            ? Colors.blueAccent.shade700
-                            : Colors.transparent,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.0,
-                        color: Colors.blueAccent.shade400,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                )),
-
-            const SizedBox(
-              height: 25,
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              height: 7.0.h,
-              child: TextField(
-                controller: _dateController,
-                focusNode: _dateFocusNode,
-                decoration: InputDecoration(
-                  hintText: "Date of Birth",
-                  hintStyle: GoogleFonts.poppins(
-                      color: Colors.grey.shade600, fontSize: 14),
-                  filled: true,
-                  fillColor: _date
-                      ? Colors.blueAccent.shade200.withOpacity(0.2)
-                      : Colors.grey.shade600.withOpacity(0.2),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 2.0,
-                      color:
-                      _date ? Colors.blueAccent.shade700 : Colors.transparent,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 2.0,
-                      color: Colors.blueAccent.shade400,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      // Code to open calendar
-                      _selectDate();
-                    },
-                    icon: Icon(
-                      Icons.calendar_month_rounded,
-                      color: _date
-                          ? Colors.blueAccent.shade400
-                          : Colors.grey.shade600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // SizedBox(
-            //   height: 25,
+            // leading: IconButton(
+            //   padding: const EdgeInsets.only(left: 15),
+            //   onPressed: () {},
+            //   icon: const Icon(Icons.arrow_back),
+            //   color: Colors.black,
             // ),
-            // Container(
-            //     padding: EdgeInsets.only(
-            //       left: 20,
-            //       right: 20,
-            //     ),
-            //     height: 45,
-            //     child:
-            //     // Note: Same code is applied for the TextFormField as well
-            //     TextField(
-            //       controller: _emailController,
-            //       focusNode: _emailFocusNode,
-            //       decoration: InputDecoration(
-            //         prefixIcon: Icon(
-            //           Icons.email_outlined,
-            //           color: _email
-            //               ? Colors.blueAccent.shade400
-            //               : Colors.grey.shade600,
-            //         ),
-            //         hintText: "Email",
-            //         hintStyle: GoogleFonts.poppins(
-            //             color: Colors.grey.shade600, fontSize: 14),
-            //         filled: true,
-            //         fillColor: _email
-            //             ? Colors.blueAccent.shade200.withOpacity(0.2)
-            //             : Colors.grey.shade600.withOpacity(0.2),
-            //         enabledBorder: OutlineInputBorder(
-            //           borderSide: BorderSide(
-            //             width: 2.0,
-            //             color: _email
-            //                 ? Colors.blueAccent.shade700
-            //                 : Colors.transparent,
-            //           ),
-            //           borderRadius: BorderRadius.circular(10),
-            //         ),
-            //         focusedBorder: OutlineInputBorder(
-            //           borderSide: BorderSide(
-            //             width: 2.0,
-            //             color: Colors.blueAccent.shade400,
-            //           ),
-            //           borderRadius: BorderRadius.circular(10),
-            //         ),
-            //       ),
-            //     )),
-            const SizedBox(
-              height: 25,
-            ),
-            Container(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                height: 7.0.h,
-                child: TextField(
-                  controller: _phoneController,
-                  focusNode: _phoneFocusNode,
-                  decoration: InputDecoration(
-                      hintText: "Phone Number",
+            backgroundColor: Colors.transparent,
+            bottomOpacity: 0,
+            elevation: 0,
+          ),
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(children: [
+
+
+
+
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      radius: 75,
+                      backgroundColor: Colors.grey.shade300,
+                      backgroundImage: _image != null ? FileImage(_image!) : null,
+                      child: _image == null
+                          ? const Icon(
+                        Icons.person_2,
+                        size: 150,
+                        color: Colors.white,
+                      )
+                          : null,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 2,
+                    right: 110,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Select Profile Picture'),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(Icons.photo),
+                                    title: const Text('Choose from Gallery'),
+                                    onTap: () {
+                                      _pickImage(ImageSource.gallery);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: const Icon(Icons.camera_alt),
+                                    title: const Text('Take a Photo'),
+                                    onTap: () {
+                                      _pickImage(ImageSource.camera);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: Colors.blueAccent.shade700,
+                        padding: const EdgeInsets.all(8),
+                        minimumSize: const Size(5, 5),
+                      ),
+                      child: const Icon(Icons.edit, size: 20),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Container(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  height: 7.0.h,
+                  child:
+                  // Note: Same code is applied for the TextFormField as well
+                  TextField(
+                    controller: _nameController,
+                    focusNode: _nameFocusNode,
+                    decoration: InputDecoration(
+                      hintText: "Full Name",
                       hintStyle: GoogleFonts.poppins(
                           color: Colors.grey.shade600, fontSize: 14),
                       filled: true,
-                      fillColor: _phone
+                      fillColor: _name
                           ? Colors.blueAccent.shade200.withOpacity(0.2)
                           : Colors.grey.shade600.withOpacity(0.2),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 2.0,
-                          color: _phone
+                          color: _name
                               ? Colors.blueAccent.shade700
                               : Colors.transparent,
                         ),
@@ -488,56 +358,31 @@ class _NewAcountoneState extends State<NewAcountone> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      prefixIcon: Icon(
-                        Icons.phone,
-                        color: _phone
-                            ? Colors.blueAccent.shade400
-                            : Colors.grey.shade600,
-                      ),
-                      // prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
-                      prefixStyle: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15.5)),
-                )),
-            const SizedBox(
-              height: 25,
-            ),
-            Container(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                height: 7.0.h,
-                child:
-                // Note: Same code is applied for the TextFormField as well
-                TextField(
-                  controller: _genderController,
-                  focusNode: _genderFocusNode,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        _selectGender();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_drop_down_rounded,
-                        size: 31,
-                      ),
-                      color: _gender
-                          ? Colors.blueAccent.shade400
-                          : Colors.grey.shade600,
                     ),
-                    hintText: "Gender",
+                  )),
+
+              const SizedBox(
+                height: 25,
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                height: 7.0.h,
+                child: TextField(
+                  controller: _dateController,
+                  focusNode: _dateFocusNode,
+                  decoration: InputDecoration(
+                    hintText: "Date of Birth",
                     hintStyle: GoogleFonts.poppins(
                         color: Colors.grey.shade600, fontSize: 14),
                     filled: true,
-                    fillColor: _gender
+                    fillColor: _date
                         ? Colors.blueAccent.shade200.withOpacity(0.2)
                         : Colors.grey.shade600.withOpacity(0.2),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2.0,
-                        color: _gender
-                            ? Colors.blueAccent.shade700
-                            : Colors.transparent,
+                        color:
+                        _date ? Colors.blueAccent.shade700 : Colors.transparent,
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -548,173 +393,331 @@ class _NewAcountoneState extends State<NewAcountone> {
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
-                )),
-            const SizedBox(
-              height: 35,
-            ),
-
-            Query(
-              options: QueryOptions(
-                document: gql(getIdQuery),
-                variables: {'email' :SignUpPage.email.toString() },
-              ),
-              builder: (QueryResult result, {fetchMore, refetch}) {
-                if (result.hasException) {
-                  print(result.exception.toString());
-                  return Center(
-                    child: Text(
-                        'Error fetching id: ${result.exception
-                            .toString()}'),
-                  );
-                }
-
-                if (result.isLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  );
-                }
-
-                idlist = result.data?['usersbyemail'] ?? [];
-                idval = idlist['id'];
-
-                return const Visibility(visible: false, child: Text('done'));
-              },
-            ),
-
-            Query(
-              options: QueryOptions(
-                document: gql(getWalletIdQuery),
-                variables: {'email' :SignUpPage.email.toString() },
-              ),
-              builder: (QueryResult result, {fetchMore, refetch}) {
-                if (result.hasException) {
-                  print(result.exception.toString());
-                  return Center(
-                    child: Text(
-                        'Error fetching walletid: ${result.exception
-                            .toString()}'),
-                  );
-                }
-
-                if (result.isLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  );
-                }
-
-                walletidlist = result.data?['balancebyemail'] ?? [];
-                walletidval = walletidlist['id'];
-
-                return const Visibility(visible: false, child: Text('done'));
-              },
-            ),
-
-            Container(
-              width: double.infinity,
-              height: 45,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(AddVehiclePage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  backgroundColor: Colors.blueAccent.shade200.withOpacity(0.2),
-                  elevation: 0,
-
-                ),
-                child: Text(
-                  'Add Vehicle',
-                  style: GoogleFonts.poppins(fontSize: 15,color: Colors.blueAccent.shade700),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 30,),
-
-            Container(
-              width: double.infinity,
-              height: 45,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_nameController.text.isEmpty ||
-                      _dateController.text.isEmpty ||
-                      _phoneController.text.isEmpty ||
-                      _genderController.text.isEmpty){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.red.shade100,
-                        duration: Duration(seconds: 3),
-                        showCloseIcon: true,
-                        closeIconColor: Colors.white,
-                        content: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Fields cannot be Empty',
-
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Enter Values properly',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Colors.red.shade400,
-                              ),
-                            ),
-                          ],
-                        ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        // Code to open calendar
+                        _selectDate();
+                      },
+                      icon: Icon(
+                        Icons.calendar_month_rounded,
+                        color: _date
+                            ? Colors.blueAccent.shade400
+                            : Colors.grey.shade600,
                       ),
-                    );
+                    ),
+                  ),
+                ),
+              ),
+              // SizedBox(
+              //   height: 25,
+              // ),
+              // Container(
+              //     padding: EdgeInsets.only(
+              //       left: 20,
+              //       right: 20,
+              //     ),
+              //     height: 45,
+              //     child:
+              //     // Note: Same code is applied for the TextFormField as well
+              //     TextField(
+              //       controller: _emailController,
+              //       focusNode: _emailFocusNode,
+              //       decoration: InputDecoration(
+              //         prefixIcon: Icon(
+              //           Icons.email_outlined,
+              //           color: _email
+              //               ? Colors.blueAccent.shade400
+              //               : Colors.grey.shade600,
+              //         ),
+              //         hintText: "Email",
+              //         hintStyle: GoogleFonts.poppins(
+              //             color: Colors.grey.shade600, fontSize: 14),
+              //         filled: true,
+              //         fillColor: _email
+              //             ? Colors.blueAccent.shade200.withOpacity(0.2)
+              //             : Colors.grey.shade600.withOpacity(0.2),
+              //         enabledBorder: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             width: 2.0,
+              //             color: _email
+              //                 ? Colors.blueAccent.shade700
+              //                 : Colors.transparent,
+              //           ),
+              //           borderRadius: BorderRadius.circular(10),
+              //         ),
+              //         focusedBorder: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             width: 2.0,
+              //             color: Colors.blueAccent.shade400,
+              //           ),
+              //           borderRadius: BorderRadius.circular(10),
+              //         ),
+              //       ),
+              //     )),
+              const SizedBox(
+                height: 25,
+              ),
+              Container(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  height: 7.0.h,
+                  child: TextField(
+                    controller: _phoneController,
+                    focusNode: _phoneFocusNode,
+                    decoration: InputDecoration(
+                        hintText: "Phone Number",
+                        hintStyle: GoogleFonts.poppins(
+                            color: Colors.grey.shade600, fontSize: 14),
+                        filled: true,
+                        fillColor: _phone
+                            ? Colors.blueAccent.shade200.withOpacity(0.2)
+                            : Colors.grey.shade600.withOpacity(0.2),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2.0,
+                            color: _phone
+                                ? Colors.blueAccent.shade700
+                                : Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2.0,
+                            color: Colors.blueAccent.shade400,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.phone,
+                          color: _phone
+                              ? Colors.blueAccent.shade400
+                              : Colors.grey.shade600,
+                        ),
+                        // prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
+                        prefixStyle: GoogleFonts.poppins(
+                            color: Colors.black, fontSize: 15.5)),
+                  )),
+              const SizedBox(
+                height: 25,
+              ),
+              Container(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                  ),
+                  height: 7.0.h,
+                  child:
+                  // Note: Same code is applied for the TextFormField as well
+                  TextField(
+                    controller: _genderController,
+                    focusNode: _genderFocusNode,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _selectGender();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_drop_down_rounded,
+                          size: 31,
+                        ),
+                        color: _gender
+                            ? Colors.blueAccent.shade400
+                            : Colors.grey.shade600,
+                      ),
+                      hintText: "Gender",
+                      hintStyle: GoogleFonts.poppins(
+                          color: Colors.grey.shade600, fontSize: 14),
+                      filled: true,
+                      fillColor: _gender
+                          ? Colors.blueAccent.shade200.withOpacity(0.2)
+                          : Colors.grey.shade600.withOpacity(0.2),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: _gender
+                              ? Colors.blueAccent.shade700
+                              : Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Colors.blueAccent.shade400,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  )),
+              const SizedBox(
+                height: 35,
+              ),
 
-                  } else {
-                    setState(() {
-                      NewAcountone.idvaluee = idval.toString();
-                      _mainFireId = fireid;
-                    });
-                    print('list: ${idlist}');
-                    print('email ${SignUpPage.email.toString()}');
-                    print('id ${idval.toString()}');
-                    print("The fireID: ${_mainFireId}");
-                    print("The image Path: ${_image!.path.toString()}");
-                    _updateUser();
-                    _updateWallet();
-                    _createUserUpload();
-                    Get.offAll(const MainPage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
-                    print("The id is: ${walletidlist}");
+              Query(
+                options: QueryOptions(
+                  document: gql(getIdQuery),
+                  variables: {'email' :SignUpPage.email.toString() },
+                ),
+                builder: (QueryResult result, {fetchMore, refetch}) {
+                  if (result.hasException) {
+                    print(result.exception.toString());
+                    return Center(
+                      child: Text(
+                          'Error fetching id: ${result.exception
+                              .toString()}'),
+                    );
                   }
 
+                  if (result.isLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                      ),
+                    );
+                  }
 
+                  idlist = result.data?['usersbyemail'] ?? [];
+                  idval = idlist['id'];
 
+                  return const Visibility(visible: false, child: Text('done'));
                 },
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  backgroundColor: Colors.blueAccent.shade700,
-                  elevation: 9,
+              ),
+
+              Query(
+                options: QueryOptions(
+                  document: gql(getWalletIdQuery),
+                  variables: {'email' :SignUpPage.email.toString() },
                 ),
-                child: Text(
-                  'Continue',
-                  style: GoogleFonts.poppins(fontSize: 15),
+                builder: (QueryResult result, {fetchMore, refetch}) {
+                  if (result.hasException) {
+                    print(result.exception.toString());
+                    return Center(
+                      child: Text(
+                          'Error fetching walletid: ${result.exception
+                              .toString()}'),
+                    );
+                  }
+
+                  if (result.isLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                      ),
+                    );
+                  }
+
+                  walletidlist = result.data?['balancebyemail'] ?? [];
+                  walletidval = walletidlist['id'];
+
+                  return const Visibility(visible: false, child: Text('done'));
+                },
+              ),
+
+              Container(
+                width: double.infinity,
+                height: 45,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(AddVehiclePage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    backgroundColor: Colors.blueAccent.shade200.withOpacity(0.2),
+                    elevation: 0,
+
+                  ),
+                  child: Text(
+                    'Add Vehicle',
+                    style: GoogleFonts.poppins(fontSize: 15,color: Colors.blueAccent.shade700),
+                  ),
                 ),
               ),
-            ),
+
+              SizedBox(height: 30,),
+
+              Container(
+                width: double.infinity,
+                height: 45,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_nameController.text.isEmpty ||
+                        _dateController.text.isEmpty ||
+                        _phoneController.text.isEmpty ||
+                        _genderController.text.isEmpty){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red.shade100,
+                          duration: Duration(seconds: 3),
+                          showCloseIcon: true,
+                          closeIconColor: Colors.white,
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Fields cannot be Empty',
+
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Enter Values properly',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  color: Colors.red.shade400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+
+                    } else {
+                      setState(() {
+                        NewAcountone.idvaluee = idval.toString();
+                        _mainFireId = fireid;
+                      });
+                      print('list: ${idlist}');
+                      print('email ${SignUpPage.email.toString()}');
+                      print('id ${idval.toString()}');
+                      print("The fireID: ${_mainFireId}");
+                      print("The image Path: ${_image!.path.toString()}");
+                      _updateUser();
+                      _updateWallet();
+                      _createUserUpload();
+                      Get.offAll(const MainPage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
+                      print("The id is: ${walletidlist}");
+                    }
 
 
-          ]),
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    backgroundColor: Colors.blueAccent.shade700,
+                    elevation: 9,
+                  ),
+                  child: Text(
+                    'Continue',
+                    style: GoogleFonts.poppins(fontSize: 15),
+                  ),
+                ),
+              ),
+
+
+            ]),
+          ),
         ),
       ),
     );

@@ -176,6 +176,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Handle List Tile 3 tap
                 Get.to(() => const UpdateProfile(),
                     transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1));
+
+
               },
             ),
             const SizedBox(height: 10,),
@@ -283,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       onPressed: () {
                                         // Get.to(() => VehicleSelectionPage(),
                                         //     transition: Transition.cupertinoDialog, duration: Duration(seconds: 1));
-                                        FirebaseAuth.instance.signOut();
+                                        FirebaseAuth.instance.signOut();  
                                         Get.offAll(() => const LoginPage(),
                                             transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1));
 

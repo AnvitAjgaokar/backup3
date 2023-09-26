@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sem5demo3/client.dart';
 import 'package:sem5demo3/selectvehicle.dart';
+import 'package:flutter/services.dart'; // Add this import
+
 
 class AddVehiclePage extends StatefulWidget {
   @override
@@ -13,6 +15,13 @@ class AddVehiclePage extends StatefulWidget {
 }
 
 class _AddVehiclePageState extends State<AddVehiclePage> {
+  RegExp indianVehicleNumberPattern = RegExp(r'^[A-Z]{2}\d{2}[A-Z]{2}\d{4}$');
+
+  bool validateIndianVehicleNumber(String vehicleNumber) {
+    return indianVehicleNumberPattern.hasMatch(vehicleNumber);
+  }
+
+
   String _vehicleModel = '';
   String _vehicleNumber = '';
   final TextEditingController _modelname = TextEditingController();
@@ -212,58 +221,46 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                   right: 15,
                 ),
                 child: ElevatedButton(
-                  onPressed: (_vehicleModel.isNotEmpty &&
-                      _vehicleNumber.isNotEmpty)
-                      ? () {
+                  onPressed: () {
                     setState(() {
-                      mainfireid = fireid.toString();
+                      mainfireid = fireid;
                     });
-                    _createNewcar();
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.green.shade100,
-                        duration: const Duration(seconds: 3),
-                        showCloseIcon: true,
-                        closeIconColor: Colors.white,
-                        content: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Vehicle Added',
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'New Vehicle has been registered',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Colors.green.shade400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                    // Create the new vehicle object
-                    // Vehicle newVehicle = Vehicle(
-                    //     name: _vehicleModel, numberPlate: _vehicleNumber);
-                    //
-                    // // Return the new vehicle to the previous screen
-                    // Get.back(result: newVehicle);
 
-                  }
-                      : () {
-                    // Show error Snackbar if any of the fields is empty
-                    if (_vehicleModel.isEmpty) {
-                      setState(() {
-                        count =1;
-                      });
+                    if (_vehicleModel.isNotEmpty &&
+                        _vehicleNumber.isNotEmpty && validateIndianVehicleNumber(_vehicleNumber)) {
+                      _createNewcar();
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green.shade100,
+                          duration: const Duration(seconds: 3),
+                          showCloseIcon: true,
+                          closeIconColor: Colors.white,
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Vehicle Added',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'New Vehicle has been registered',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  color: Colors.green.shade400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (_vehicleModel.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.red.shade100,
@@ -294,8 +291,38 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                           ),
                         ),
                       );
-                    }
-                    if (_vehicleNumber.isEmpty && count!=1) {
+                    } else if (!validateIndianVehicleNumber(_vehicleNumber)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red.shade100,
+                          duration: const Duration(seconds: 3),
+                          showCloseIcon: true,
+                          closeIconColor: Colors.white,
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'Invalid Vehicle Plate Number!',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Enter a valid Indian vehicle Plate number',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  color: Colors.red.shade400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else if (_vehicleNumber.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.red.shade100,
@@ -316,7 +343,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Enter a Valid Vehicle Number',
+                                'Enter a Valid Vehicle number',
                                 style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   color: Colors.red.shade400,
@@ -326,6 +353,7 @@ class _AddVehiclePageState extends State<AddVehiclePage> {
                           ),
                         ),
                       );
+
                     }
                   },
                   child: Text(

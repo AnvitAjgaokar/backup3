@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: UserCheck(),
+          home: OnBoardingPage(),
           // darkTheme: ThemeData(brightness: Brightness.dark),
           // theme: ThemeData(brightness: Brightness.light),
           // themeMode: ThemeMode.system,

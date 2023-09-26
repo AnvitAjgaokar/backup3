@@ -100,38 +100,38 @@ class _SignUpPageState extends State<SignUpPage> {
 
 
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.green.shade100,
-          duration: Duration(seconds: 3),
-          showCloseIcon: true,
-          closeIconColor: Colors.white,
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                'Login Successful',
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'You have been logged into the app successfully',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  color: Colors.green.shade400,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     backgroundColor: Colors.green.shade100,
+      //     duration: Duration(seconds: 3),
+      //     showCloseIcon: true,
+      //     closeIconColor: Colors.white,
+      //     content: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       mainAxisSize: MainAxisSize.max,
+      //       children: [
+      //         Text(
+      //           'Login Successful',
+      //           style: GoogleFonts.poppins(
+      //             fontSize: 18,
+      //             fontWeight: FontWeight.bold,
+      //             color: Colors.green,
+      //           ),
+      //         ),
+      //         SizedBox(height: 8),
+      //         Text(
+      //           'You have been logged into the app successfully',
+      //           style: GoogleFonts.poppins(
+      //             fontSize: 16,
+      //             color: Colors.green.shade400,
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // );
     } on FirebaseException catch (e){
-     if (count !=1){
+
        ScaffoldMessenger.of(context).showSnackBar(
          SnackBar(
            backgroundColor: Colors.red.shade100,
@@ -164,7 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
          ),
        );
 
-     }
+
     }
 
   }

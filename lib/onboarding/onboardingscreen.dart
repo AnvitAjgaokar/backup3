@@ -55,7 +55,7 @@ class OnBoardingPage extends StatelessWidget {
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     color: Colors.blueAccent.shade700)),
-            onDone: () => Get.to(() => NewAcount(),
+            onDone: () => Get.to(() => UserCheck(),
                 transition: Transition.cupertinoDialog, duration: Duration(seconds: 1)),
             showNextButton: false,
             dotsDecorator: getDotDecoration(),

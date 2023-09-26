@@ -437,7 +437,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Fields cannot be Empty!',
+                  'Invalid Credentials',
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

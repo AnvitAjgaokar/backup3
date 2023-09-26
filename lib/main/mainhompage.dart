@@ -34,6 +34,9 @@ List<Map<String, dynamic>> data  = [
 ];
 
 class MainHomePage extends StatefulWidget {
+  static int id1 = 0;
+  static int id2 = 0;
+  static int id3 = 0;
   const MainHomePage({Key? key}) : super(key: key);
 
   @override
@@ -152,7 +155,12 @@ class _MainHomePageState extends State<MainHomePage> {
           // consumeTapEvents: true,
           onTap: (){
             goToPark(i.toString());
+            setState(() {
+            });
             if (i.toString() == '1'){
+              setState(() {
+                MainHomePage.id1 = i;
+              });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.green.shade100,
@@ -184,6 +192,9 @@ class _MainHomePageState extends State<MainHomePage> {
                 ),
               );
             }  else if (i.toString() == '2'){
+              setState(() {
+                MainHomePage.id1 = i;
+              });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.green.shade100,
@@ -215,6 +226,9 @@ class _MainHomePageState extends State<MainHomePage> {
                 ),
               );
             } else if (i.toString() == '3') {
+              setState(() {
+                MainHomePage.id1 = i;
+              });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.green.shade100,
