@@ -564,7 +564,7 @@ class _SummaryPageState extends State<SummaryPage> {
                                                   );
 
 
-                                                  Future.delayed(Duration(seconds: 2), () {
+                                                  Future.delayed(Duration(seconds: 1), () {
                                                     Get.offAll(MainPage());
                                                   });
 

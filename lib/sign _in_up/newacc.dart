@@ -645,20 +645,59 @@ class _NewAcountoneState extends State<NewAcountone> {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    NewAcountone.idvaluee = idval.toString();
-                    _mainFireId = fireid;
-                  });
-                  print('list: ${idlist}');
-                  print('email ${SignUpPage.email.toString()}');
-                  print('id ${idval.toString()}');
-                  print("The fireID: ${_mainFireId}");
-                  print("The image Path: ${_image!.path.toString()}");
-                  _updateUser();
-                  _updateWallet();
-                  _createUserUpload();
-                  Get.offAll(const MainPage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
-                  print("The id is: ${walletidlist}");
+                  if (_nameController.text.isEmpty ||
+                      _dateController.text.isEmpty ||
+                      _phoneController.text.isEmpty ||
+                      _genderController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red.shade100,
+                        duration: Duration(seconds: 3),
+                        showCloseIcon: true,
+                        closeIconColor: Colors.white,
+                        content: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              'Fields cannot be Empty',
+
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Enter Values properly',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Colors.red.shade400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+
+                  } else {
+                    setState(() {
+                      NewAcountone.idvaluee = idval.toString();
+                      _mainFireId = fireid;
+                    });
+                    print('list: ${idlist}');
+                    print('email ${SignUpPage.email.toString()}');
+                    print('id ${idval.toString()}');
+                    print("The fireID: ${_mainFireId}");
+                    print("The image Path: ${_image!.path.toString()}");
+                    _updateUser();
+                    _updateWallet();
+                    _createUserUpload();
+                    Get.offAll(const MainPage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
+                    print("The id is: ${walletidlist}");
+                  }
+
 
 
                 },

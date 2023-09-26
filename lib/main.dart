@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sem5demo3/authentication/auth_controller.dart';
 import 'package:sem5demo3/firebase_options.dart';
 import 'package:sem5demo3/onboarding/onboardingscreen.dart';
+import 'package:sem5demo3/sign%20_in_up/usercheck.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async{
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: OnBoardingPage(),
+          home: UserCheck(),
           // darkTheme: ThemeData(brightness: Brightness.dark),
           // theme: ThemeData(brightness: Brightness.light),
           // themeMode: ThemeMode.system,

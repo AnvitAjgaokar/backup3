@@ -116,6 +116,42 @@ class _SelectVehicleState extends State<SelectVehicle> {
   dynamic mainuser;
   dynamic mainphone;
 
+  Future<void> _deleteDetail(String userId) async {
+    // final HttpLink httpLink = HttpLink(
+    //     'http://192.168.43.12:8000/graphql/'); // Replace with your GraphQL API URL
+
+    final GraphQLClient client = GraphQLClient(
+      cache: GraphQLCache(),
+      link: httpLink,
+    );
+
+    final MutationOptions options = MutationOptions(
+      document: gql(deleteDetailMutation),
+      variables: {'id': userId},
+    );
+
+    final QueryResult result = await client.mutate(options);
+
+    if (result.hasException) {
+      print('Error deleting Detail: ${result.exception.toString()}');
+    } else {
+      final success = result.data?['deleteDetail']['success'];
+      if (success) {
+        print('Detail deleted successfully');
+      } else {
+        print('Failed to delete Detail');
+      }
+    }
+  }
+
+  final String deleteDetailMutation = r'''
+    mutation($id: ID!) {
+      deleteDetail(id: $id) {
+        success
+      }
+    }
+  ''';
+
 
 
 
@@ -142,6 +178,7 @@ class _SelectVehicleState extends State<SelectVehicle> {
             padding: const EdgeInsets.only(left: 15),
             onPressed: () {
               Navigator.pop(context);
+              _deleteDetail(SelectVehicle.maindetailiddd.toString());
             },
             icon: const Icon(Icons.arrow_back),
             color: Colors.black,

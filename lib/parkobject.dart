@@ -133,9 +133,9 @@ class _ParkingOneState extends State<ParkingOne> {
 
   List imageUrls = [
     'assets/images/parkone4svg.svg',
-    'assets/images/parkone4svg.svg',
-    'assets/images/parkone4svg.svg',
-    'assets/images/parkone4svg.svg',
+    // 'assets/images/parkone4svg.svg',
+    // 'assets/images/parkone4svg.svg',
+    // 'assets/images/parkone4svg.svg',
 
   ];
 
@@ -306,29 +306,29 @@ class _ParkingOneState extends State<ParkingOne> {
                       },
                     ),
                   ),
-                  Positioned(
-                    bottom: 10.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: DotsIndicator(
-                      dotsCount: imageUrls.length,
-                      position: _currentPageIndex.toDouble(),
-                      decorator: DotsDecorator(
-                        activeColor: Colors.blueAccent.shade700,
-                        color: Colors.white,
-                        activeShape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(5.0),
-                            // Adjust the left radius to elongate the active dot
-                            right: Radius.circular(
-                                5.0), // Adjust the right radius to elongate the active dot
-                          ),
-                        ),
-                        activeSize: const Size(30.0,
-                            8.0), // Adjust the size to elongate the active dot
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 10.0,
+                  //   left: 0.0,
+                  //   right: 0.0,
+                  //   child: DotsIndicator(
+                  //     dotsCount: imageUrls.length,
+                  //     position: _currentPageIndex.toDouble(),
+                  //     decorator: DotsDecorator(
+                  //       activeColor: Colors.blueAccent.shade700,
+                  //       color: Colors.white,
+                  //       activeShape: const RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.horizontal(
+                  //           left: Radius.circular(5.0),
+                  //           // Adjust the left radius to elongate the active dot
+                  //           right: Radius.circular(
+                  //               5.0), // Adjust the right radius to elongate the active dot
+                  //         ),
+                  //       ),
+                  //       activeSize: const Size(30.0,
+                  //           8.0), // Adjust the size to elongate the active dot
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
 
