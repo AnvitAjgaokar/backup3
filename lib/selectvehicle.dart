@@ -291,7 +291,7 @@ class _SelectVehicleState extends State<SelectVehicle> {
                                   }
 
                                   maindetailid = idList.isNotEmpty ? idList.last : '';
-                                  SelectVehicle.maindetailiddd = maindetailid;
+                                  SelectVehicle.maindetailiddd = maindetailid.toString();
                                   // print('mainid: ${maindetailid}');
 
                                   print( '${iddatalist}');
@@ -341,6 +341,7 @@ class _SelectVehicleState extends State<SelectVehicle> {
                         _updateParkdetails();
                         Get.to(() => BookingDetails(),
                             transition: Transition.cupertinoDialog, duration: Duration(seconds: 1));
+                        print("ID: ${SelectVehicle.maindetailiddd.toString()}");
                       },
                       child: Text(
                         'Continue Booking',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sem5demo3/animations/savedanimation.dart';
 import 'package:sem5demo3/main/mainhompage.dart';
 import 'package:sem5demo3/main/mainprofile.dart';
 import 'package:sem5demo3/main/parkingone.dart';
@@ -19,7 +20,7 @@ class _MainPageState extends State<MainPage> {
   List<Widget> _buildScreens() {
     return [
       const MainHomePage(),
-      const MainSavePage(),
+      const SavedLoadingPageOne(),
       const MainParkingPage(),
       const ProfilePage(),
     ];

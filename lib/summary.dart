@@ -591,6 +591,8 @@ class _SummaryPageState extends State<SummaryPage> {
                               );
                             });
 
+                        print("ID: ${SelectVehicle.maindetailiddd}");
+
                       },
                       style: ElevatedButton.styleFrom(
                         shape: StadiumBorder(),
@@ -608,7 +610,7 @@ class _SummaryPageState extends State<SummaryPage> {
                     options: QueryOptions(
                       document: gql(parkingDeatil),
                       // variables: {'id': NewAcountone.idvaluee},
-                      variables: {'id': SelectVehicle.maindetailiddd},
+                      variables: {'id': SelectVehicle.maindetailiddd.toString()},
 
                     ),
                     builder: (QueryResult result, {fetchMore, refetch}) {

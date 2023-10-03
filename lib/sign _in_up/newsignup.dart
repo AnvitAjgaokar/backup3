@@ -40,40 +40,40 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  Future<void> _createWallet() async {
-    print("Creating Wallet");
-
-// Convert the resized image to base64
-
-    final String createWalletMutation = '''
-      mutation () {
-        createWallet(email: "${_emailController.text.trim()}") {
-          walletname {
-            id
-            email
-     
-
-          }
-        }
-      }
-    ''';
-
-    final GraphQLClient _client = client.value;
-
-    final MutationOptions options = MutationOptions(
-      document: gql(createWalletMutation),
-    );
-
-    final QueryResult result = await _client.mutate(options);
-
-    if (result.hasException) {
-      print('Error creating wallet: ${result.exception.toString()}');
-    } else {
-      print('Wallet created successfully!');
-      // Clear form fields after successful user creation
-
-    }
-  }
+//   Future<void> _createWallet() async {
+//     print("Creating Wallet");
+//
+// // Convert the resized image to base64
+//
+//     final String createWalletMutation = '''
+//       mutation () {
+//         createWallet(email: "${_emailController.text.trim()}") {
+//           walletname {
+//             id
+//             email
+//
+//
+//           }
+//         }
+//       }
+//     ''';
+//
+//     final GraphQLClient _client = client.value;
+//
+//     final MutationOptions options = MutationOptions(
+//       document: gql(createWalletMutation),
+//     );
+//
+//     final QueryResult result = await _client.mutate(options);
+//
+//     if (result.hasException) {
+//       print('Error creating wallet: ${result.exception.toString()}');
+//     } else {
+//       print('Wallet created successfully!');
+//       // Clear form fields after successful user creation
+//
+//     }
+//   }
 
 
 
@@ -171,41 +171,41 @@ class _SignUpPageState extends State<SignUpPage> {
 
 
 
-  Future<void> _createUser() async {
-    print("Creating user");
-
-// Convert the resized image to base64
-
-    final String createUserMutation = '''
-      mutation () {
-        createUser(email: "${_emailController.text}") {
-          user {
-            id
-            email
-     
-
-          }
-        }
-      }
-    ''';
-
-    final GraphQLClient _client = client.value;
-
-    final MutationOptions options = MutationOptions(
-      document: gql(createUserMutation),
-    );
-
-    final QueryResult result = await _client.mutate(options);
-
-    if (result.hasException) {
-      print('Error creating user: ${result.exception.toString()}');
-    } else {
-      print('User created successfully!');
-      // Clear form fields after successful user creation
-      _emailController.clear();
-
-    }
-  }
+//   Future<void> _createUser() async {
+//     print("Creating user");
+//
+// // Convert the resized image to base64
+//
+//     final String createUserMutation = '''
+//       mutation () {
+//         createUser(email: "${_emailController.text}") {
+//           user {
+//             id
+//             email
+//
+//
+//           }
+//         }
+//       }
+//     ''';
+//
+//     final GraphQLClient _client = client.value;
+//
+//     final MutationOptions options = MutationOptions(
+//       document: gql(createUserMutation),
+//     );
+//
+//     final QueryResult result = await _client.mutate(options);
+//
+//     if (result.hasException) {
+//       print('Error creating user: ${result.exception.toString()}');
+//     } else {
+//       print('User created successfully!');
+//       // Clear form fields after successful user creation
+//       _emailController.clear();
+//
+//     }
+//   }
 
 
 
@@ -506,8 +506,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       });
                       _submitForm();
                       _signUp();
-                      _createUser();
-                      _createWallet();
+                      // _createUser();
+                      // _createWallet();
 
                       // print("email : ${_emailController.text.trim()}");
 

@@ -54,70 +54,135 @@ class _NewAcountoneState extends State<NewAcountone> {
   dynamic idval;
   dynamic walletidval;
 
+  Future<void> _createWallet() async {
+    print("Creating Wallet");
 
+// Convert the resized image to base64
 
-  Future<void> _updateUser() async {
-      print("Updating User!!");
-      final String updateUserMutation = '''
-      mutation() {
-        updateUser(inputData: {
-          userId: "${idval}"
-          username: "${_nameController.text.trim()}",
-          date: "${_dateController.text.trim()}"
-          phoneno: "${_phoneController.text.trim()}"
-          gender: "${_genderController.text.trim()}"
-          fireid: "${_mainFireId}"    
-        }) {
-          user {
+    final String createWalletMutation = '''
+      mutation () {
+        createWallet(email: "${SignUpPage.email}", fireid: "${_mainFireId.toString()}") {
+          walletname {
             id
-            username
-            date
-            phoneno
-            gender
+            email
             fireid
+     
+
           }
         }
       }
-
     ''';
-      // final HttpLink httpLink = HttpLink(
-      //     'http://192.168.43.12:8000/graphql/'); // Replace with your GraphQL API URL
 
-      final GraphQLClient client = GraphQLClient(
-        cache: GraphQLCache(),
-        link: httpLink,
-      );
+    final GraphQLClient _client = client.value;
 
-      final MutationOptions options = MutationOptions(
-        document: gql(updateUserMutation),
-        // variables: {'id': userId},
-      );
+    final MutationOptions options = MutationOptions(
+      document: gql(createWalletMutation),
+    );
 
-      final QueryResult result = await client.mutate(options);
+    final QueryResult result = await _client.mutate(options);
 
     if (result.hasException) {
-      print('Error updating user: ${result.exception.toString()}');
+      print('Error creating wallet: ${result.exception.toString()}');
     } else {
-      print('User updated successfully');
+      print('Wallet created successfully!');
+      // Clear form fields after successful user creation
+
     }
   }
 
-  _createUserUpload() async {
-    var request = http.MultipartRequest('POST', Uri.parse('${httpImage}/user/'));
 
-    request.files.add(await http.MultipartFile.fromPath('userImages', '${_image!.path.toString()}'));
+  _createUser() async {
+    var request = http.MultipartRequest('POST', Uri.parse('${httpImage}/user/'));
+    print("before send");
+    request.fields.addAll({
+      'username': "${_nameController.text.trim()}",
+      'date': "${_dateController.text.trim()}",
+      'email': "${SignUpPage.email.toString()}",
+      'phoneno': "${_phoneController.text.trim()}",
+      'gender': "${_genderController.text.trim()}",
+      'fireid': "${_mainFireId.toString()}",
+    });
+    print(_image!.path.toString());
+    request.files.add(await http.MultipartFile.fromPath('profilephoto', _image!.path.toString()));
+    // print("after request send ");
 
     http.StreamedResponse response = await request.send();
 
+
     if (response.statusCode == 200) {
       print(response);
-      print("Photo uploaded!!!!");
+      print("Photo Uploaded successfully with user");
     }
     else {
+      print("ERROR");
       print(response.reasonPhrase);
-      print("Failed!!!!");
     }
   }
+
+
+
+  // Future<void> _updateUser() async {
+  //     print("Updating User!!");
+  //     final String updateUserMutation = '''
+  //     mutation() {
+  //       updateUser(inputData: {
+  //         userId: "${idval}"
+  //         username: "${_nameController.text.trim()}",
+  //         date: "${_dateController.text.trim()}"
+  //         phoneno: "${_phoneController.text.trim()}"
+  //         gender: "${_genderController.text.trim()}"
+  //         fireid: "${_mainFireId}"
+  //       }) {
+  //         user {
+  //           id
+  //           username
+  //           date
+  //           phoneno
+  //           gender
+  //           fireid
+  //         }
+  //       }
+  //     }
+  //
+  //   ''';
+  //     // final HttpLink httpLink = HttpLink(
+  //     //     'http://192.168.43.12:8000/graphql/'); // Replace with your GraphQL API URL
+  //
+  //     final GraphQLClient client = GraphQLClient(
+  //       cache: GraphQLCache(),
+  //       link: httpLink,
+  //     );
+  //
+  //     final MutationOptions options = MutationOptions(
+  //       document: gql(updateUserMutation),
+  //       // variables: {'id': userId},
+  //     );
+  //
+  //     final QueryResult result = await client.mutate(options);
+  //
+  //   if (result.hasException) {
+  //     print('Error updating user: ${result.exception.toString()}');
+  //   } else {
+  //     print('User updated successfully');
+  //   }
+  // }
+
+  // _createUserUpload() async {
+  //   var request = http.MultipartRequest('POST', Uri.parse('${httpImage}/user/'));
+  //
+  //   request.files.add(await http.MultipartFile.fromPath('userImages', '${_image!.path.toString()}'));
+  //
+  //   http.StreamedResponse response = await request.send();
+  //
+  //   if (response.statusCode == 200) {
+  //     print(response);
+  //     print("Photo uploaded!!!!");
+  //   }
+  //   else {
+  //     print(response.reasonPhrase);
+  //     print("Failed!!!!");
+  //   }
+  // }
 
 
 
@@ -556,67 +621,67 @@ class _NewAcountoneState extends State<NewAcountone> {
                 height: 35,
               ),
 
-              Query(
-                options: QueryOptions(
-                  document: gql(getIdQuery),
-                  variables: {'email' :SignUpPage.email.toString() },
-                ),
-                builder: (QueryResult result, {fetchMore, refetch}) {
-                  if (result.hasException) {
-                    print(result.exception.toString());
-                    return Center(
-                      child: Text(
-                          'Error fetching id: ${result.exception
-                              .toString()}'),
-                    );
-                  }
-
-                  if (result.isLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.transparent,
-                        backgroundColor: Colors.transparent,
-                      ),
-                    );
-                  }
-
-                  idlist = result.data?['usersbyemail'] ?? [];
-                  idval = idlist['id'];
-
-                  return const Visibility(visible: false, child: Text('done'));
-                },
-              ),
-
-              Query(
-                options: QueryOptions(
-                  document: gql(getWalletIdQuery),
-                  variables: {'email' :SignUpPage.email.toString() },
-                ),
-                builder: (QueryResult result, {fetchMore, refetch}) {
-                  if (result.hasException) {
-                    print(result.exception.toString());
-                    return Center(
-                      child: Text(
-                          'Error fetching walletid: ${result.exception
-                              .toString()}'),
-                    );
-                  }
-
-                  if (result.isLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.transparent,
-                        backgroundColor: Colors.transparent,
-                      ),
-                    );
-                  }
-
-                  walletidlist = result.data?['balancebyemail'] ?? [];
-                  walletidval = walletidlist['id'];
-
-                  return const Visibility(visible: false, child: Text('done'));
-                },
-              ),
+              // Query(
+              //   options: QueryOptions(
+              //     document: gql(getIdQuery),
+              //     variables: {'email' :SignUpPage.email.toString() },
+              //   ),
+              //   builder: (QueryResult result, {fetchMore, refetch}) {
+              //     if (result.hasException) {
+              //       print(result.exception.toString());
+              //       return Center(
+              //         child: Text(
+              //             'Error fetching id: ${result.exception
+              //                 .toString()}'),
+              //       );
+              //     }
+              //
+              //     if (result.isLoading) {
+              //       return const Center(
+              //         child: CircularProgressIndicator(
+              //           color: Colors.transparent,
+              //           backgroundColor: Colors.transparent,
+              //         ),
+              //       );
+              //     }
+              //
+              //     idlist = result.data?['usersbyemail'] ?? [];
+              //     idval = idlist['id'];
+              //
+              //     return const Visibility(visible: false, child: Text('done'));
+              //   },
+              // ),
+              //
+              // Query(
+              //   options: QueryOptions(
+              //     document: gql(getWalletIdQuery),
+              //     variables: {'email' :SignUpPage.email.toString() },
+              //   ),
+              //   builder: (QueryResult result, {fetchMore, refetch}) {
+              //     if (result.hasException) {
+              //       print(result.exception.toString());
+              //       return Center(
+              //         child: Text(
+              //             'Error fetching walletid: ${result.exception
+              //                 .toString()}'),
+              //       );
+              //     }
+              //
+              //     if (result.isLoading) {
+              //       return const Center(
+              //         child: CircularProgressIndicator(
+              //           color: Colors.transparent,
+              //           backgroundColor: Colors.transparent,
+              //         ),
+              //       );
+              //     }
+              //
+              //     walletidlist = result.data?['balancebyemail'] ?? [];
+              //     walletidval = walletidlist['id'];
+              //
+              //     return const Visibility(visible: false, child: Text('done'));
+              //   },
+              // ),
 
               Container(
                 width: double.infinity,
@@ -688,14 +753,16 @@ class _NewAcountoneState extends State<NewAcountone> {
                         NewAcountone.idvaluee = idval.toString();
                         _mainFireId = fireid;
                       });
-                      print('list: ${idlist}');
-                      print('email ${SignUpPage.email.toString()}');
-                      print('id ${idval.toString()}');
-                      print("The fireID: ${_mainFireId}");
-                      print("The image Path: ${_image!.path.toString()}");
-                      _updateUser();
-                      _updateWallet();
-                      _createUserUpload();
+                      // print('list: ${idlist}');
+                      // print('email ${SignUpPage.email.toString()}');
+                      // print('id ${idval.toString()}');
+                      // print("The fireID: ${_mainFireId}");
+                      // print("The image Path: ${_image!.path.toString()}");
+                      // _updateUser();
+                      // _updateWallet();
+                      _createWallet();
+                      _createUser();
+                      // _createUserUpload();
                       Get.offAll(const MainPage(),transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1),);
                       print("The id is: ${walletidlist}");
                     }

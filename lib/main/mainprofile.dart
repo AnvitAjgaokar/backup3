@@ -69,6 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundColor: Colors.transparent,
           bottomOpacity: 0,
           elevation: 0,
+
         ),
 
         body: Column(
@@ -199,6 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
               title: Text("Summary",style: GoogleFonts.poppins(fontSize: 18),),
               leading: const Icon(Icons.bar_chart_rounded,size: 35,),
               onTap: () {
+                FirebaseAuth.instance.signOut();
                 // Handle List Tile 3 tap
               },
             ),
