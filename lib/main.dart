@@ -5,7 +5,6 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
 import 'package:sem5demo3/authentication/auth_controller.dart';
 import 'package:sem5demo3/firebase_options.dart';
-import 'package:sem5demo3/onboarding/onboardingscreen.dart';
 import 'package:sem5demo3/sign%20_in_up/usercheck.dart';
 import 'package:sizer/sizer.dart';
 
@@ -30,15 +29,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
-        return GetMaterialApp(
+        return const GetMaterialApp(
           debugShowCheckedModeBanner: false,
           home: UserCheck(),
-          // darkTheme: ThemeData(brightness: Brightness.dark),
-          // theme: ThemeData(brightness: Brightness.light),
-          // themeMode: ThemeMode.system,
-          // themeMode: ThemeMode.system,
-          // darkTheme: ThemeData.dark(),
-          // theme: ThemeData.light(),
+
         );
       },
 

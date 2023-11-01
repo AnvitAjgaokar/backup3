@@ -181,37 +181,6 @@ class _LoginPageState extends State<LoginPage> {
                  SizedBox(
                   height: 7.h,
                 ),
-                // Container(
-                //   padding: EdgeInsets.only(right: 20),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       const SizedBox(width: 10),
-                //       Checkbox(
-                //         side: BorderSide(
-                //             color: Colors.blueAccent.shade700, width: 2),
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(6),
-                //           // side: BorderSide(color: Colors.blueAccent.shade700),
-                //         ),
-                //         value: rememberMe,
-                //         activeColor: Colors.blueAccent.shade700,
-                //         checkColor: Colors.white,
-                //         onChanged: (newValue) {
-                //           setState(() {
-                //             rememberMe = newValue ?? false;
-                //           });
-                //         },
-                //       ),
-                //       const SizedBox(width: 0),
-                //       Text(
-                //         'Remember me',
-                //         style: GoogleFonts.poppins(
-                //             fontSize: 14, color: Colors.black),
-                //       ),
-                //     ],
-                //   ),
-                // ),
 
                 Container(
                   width: double.infinity,
@@ -278,49 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                           )),
                     ]),
 
-                // Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: <Widget>[
-                //       Container(
-                //         width: 70,
-                //         height: 50,
-                //         child: OutlinedButton(
-                //             onPressed: () {},
-                //             child: Image(
-                //               image: AssetImage("assets/logos/newface.jpg"),
-                //               width: 20,
-                //               height: 30,
-                //             )),
-                //       ),
-                //       SizedBox(
-                //         width: 20,
-                //       ),
-                //       Container(
-                //         width: 70,
-                //         height: 50,
-                //         child: OutlinedButton(
-                //             onPressed: () {},
-                //             child: Image(
-                //               image: AssetImage("assets/logos/newgoogle.jpg"),
-                //               width: 20,
-                //               height: 30,
-                //             )),
-                //       ),
-                //       SizedBox(
-                //         width: 20,
-                //       ),
-                //       Container(
-                //         width: 70,
-                //         height: 50,
-                //         child: OutlinedButton(
-                //             onPressed: () {},
-                //             child: Image(
-                //               image: AssetImage("assets/logos/newapple.jpg"),
-                //               width: 20,
-                //               height: 30,
-                //             )),
-                //       ),
-                //     ]),
+
                  SizedBox(
                   height: 1.3.h,
                 ),
@@ -393,38 +320,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         count =1;
       });
-      // if (isEmailValid && isPasswordValid) {
-      //   // goHome(context);
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //       backgroundColor: Colors.green.shade100,
-      //       duration: Duration(seconds: 3),
-      //       showCloseIcon: true,
-      //       closeIconColor: Colors.white,
-      //       content: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         mainAxisSize: MainAxisSize.max,
-      //         children: [
-      //           Text(
-      //             'Congratulations',
-      //             style: GoogleFonts.poppins(
-      //               fontSize: 18,
-      //               fontWeight: FontWeight.bold,
-      //               color: Colors.green,
-      //             ),
-      //           ),
-      //           SizedBox(height: 8),
-      //           Text(
-      //             'Account created Successfully!!',
-      //             style: GoogleFonts.poppins(
-      //               fontSize: 16,
-      //               color: Colors.green.shade400,
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   );}
+
         if (!isEmailValid && !isPasswordValid) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

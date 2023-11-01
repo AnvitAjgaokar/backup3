@@ -9,6 +9,8 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:sem5demo3/client.dart';
 import 'package:sem5demo3/sign%20_in_up/newacc.dart';
+import 'package:http/http.dart' as http;
+
 
 class UpdateProfile extends StatefulWidget {
   const UpdateProfile({Key? key}) : super(key: key);
@@ -44,6 +46,30 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   Future<void> _updateUser() async {
     print("Updating User!!");
+
+
+
+      var request = http.MultipartRequest('POST', Uri.parse('${httpImage}/user/'));
+      print("before send");
+
+      print(_image!.path.toString());
+      request.files.add(await http.MultipartFile.fromPath('profilephoto', _image!.path.toString()));
+      // print("after request send ");
+
+      http.StreamedResponse response = await request.send();
+
+
+      if (response.statusCode == 200) {
+        print(response);
+        print("Photo Uploaded successfully with user");
+      }
+      else {
+        print("ERROR");
+        print(response.reasonPhrase);
+      }
+
+
+
     final String updateUserMutation = '''
       mutation() {
         updateFireuser(inputData: {

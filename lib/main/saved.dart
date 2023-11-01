@@ -4,49 +4,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:sem5demo3/animations/loading%20animation.dart';
-import 'package:sizer/sizer.dart';
-
+import 'package:sem5demo3/parkobjectone.dart';
 import '../client.dart';
 
 class MainSavePage extends StatefulWidget {
+  static String pname = '';
   const MainSavePage({Key? key}) : super(key: key);
   @override
   State<MainSavePage> createState() => _MainSavePageState();
 }
 
 class _MainSavePageState extends State<MainSavePage> {
-  // Sample list of data for demonstration
-  // List<Map<String, dynamic>> dataList = [
-  //   {
-  //     'title': 'WellBack North',
-  //     'subtitle': 'Subtitle 1',
-  //     'prefixPhoto': 'assets/logos/chamu.jpeg',
-  //     // 'suffixIcon': Icons.arrow_forward,
-  //   },
-  //   {
-  //     'title': 'Item 2',
-  //     'subtitle': 'Subtitle 2',
-  //     'prefixPhoto': 'assets/logos/chamu.jpeg',
-  //     // 'suffixIcon': Icons.arrow_forward,
-  //   },
-  //   {
-  //     'title': 'Item 3',
-  //     'subtitle': 'Subtitle 3',
-  //     'prefixPhoto': 'assets/logos/chamu.jpeg',
-  //     // 'suffixIcon': Icons.arrow_forward,
-  //   },
-  //   // Add more items as needed
-  // ];
 
-  // dynamic  dataList =[];
-
-  // Filtered data list based on search
-  // List<Map<String, dynamic>> filteredDataList = [];
-
-  // TextEditingController searchController = TextEditingController();
-  // FocusNode searchFocus = FocusNode(); // Create a FocusNode
   List<dynamic> dataList = [];
+  dynamic parname;
   Future<void> _deleteSaved(String userId) async {
     // final HttpLink httpLink = HttpLink(
     //     'http://192.168.43.12:8000/graphql/'); // Replace with your GraphQL API URL
@@ -111,6 +82,7 @@ class _MainSavePageState extends State<MainSavePage> {
         fireid
         spotname
         spotaddress
+        displayphoto
 
       }
     }
@@ -120,13 +92,13 @@ class _MainSavePageState extends State<MainSavePage> {
   @override
   Widget build(BuildContext context) {
     String fireid = auth.currentUser!.uid.toString();
-    final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
-      GraphQLClient(
-        cache: GraphQLCache(),
-        link: httpLink,
+      final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
+        GraphQLClient(
+          cache: GraphQLCache(),
+          link: httpLink,
 
-      ),
-    );
+        ),
+      );
 
     return Scaffold(
         appBar: AppBar(
@@ -209,6 +181,7 @@ class _MainSavePageState extends State<MainSavePage> {
                   itemBuilder: (context, index) {
                     final save = dataList[index];
                     final saveid = save['id'];
+                    parname = save['spotname'];
 
                     // final item = filteredDataList[index];
                     return Padding(
@@ -219,6 +192,7 @@ class _MainSavePageState extends State<MainSavePage> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: ListTile(
+
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 16,
@@ -236,8 +210,8 @@ class _MainSavePageState extends State<MainSavePage> {
                           ),
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              'assets/logos/chamu.jpeg',
+                            child: Image.network(
+                              '${save['displayphoto']}',
                               width: 60,
                               height: 60,
                               fit: BoxFit.cover,
@@ -249,7 +223,7 @@ class _MainSavePageState extends State<MainSavePage> {
                                 context: context,
                                 builder: (BuildContext context){
                                   return SizedBox(
-                                    height: 200,
+                                    height: 250,
                                     child: Center(
                                       child: Column(
                                         children: [
@@ -330,6 +304,12 @@ class _MainSavePageState extends State<MainSavePage> {
                                   );
                                 });},),
                           onTap: () {
+                            setState(() {
+                              MainSavePage.pname = parname.toString();
+                            });
+
+                            // Get.to(() => const ParkingTwo(),
+                            //     transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1));
 
                           },
                         ),

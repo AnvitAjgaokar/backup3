@@ -7,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sem5demo3/animations/loading%20animation.dart';
 import 'package:sem5demo3/parkobject.dart';
-import 'package:sem5demo3/parkone.dart';
 import 'package:sem5demo3/searchpage.dart';
 
 List<Map<String, dynamic>> data  = [
@@ -35,8 +34,7 @@ List<Map<String, dynamic>> data  = [
 
 class MainHomePage extends StatefulWidget {
   static int id1 = 0;
-  static int id2 = 0;
-  static int id3 = 0;
+
   const MainHomePage({Key? key}) : super(key: key);
 
   @override
@@ -44,12 +42,11 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
-  Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
   final Map<String, Marker> _markers = {};
 
-  
+
   LocationData? currentLocation;
   dynamic parkingonelong =0;
   void getCurrentLocation(){
@@ -70,13 +67,6 @@ class _MainHomePageState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var markers =   {
-      const Marker(markerId: MarkerId('1'),position: LatLng(19.1031122, 72.8350857)),
-      const Marker(markerId: MarkerId('2'),position: LatLng(19.1118888, 72.8411111)),
-      const Marker(markerId: MarkerId('3'),position: LatLng(19.092000, 72.8410111)),
-
-
-    };
     return currentLocation == null ? LoadingPageOne() : Scaffold(
       body:  Stack(
         children:[
@@ -138,7 +128,6 @@ class _MainHomePageState extends State<MainHomePage> {
 
   }
 
-
   _generateMarkers() async {
     for (int i = 0; i < data.length;i++){
       BitmapDescriptor markerIcon = await BitmapDescriptor.fromAssetImage(
@@ -148,19 +137,20 @@ class _MainHomePageState extends State<MainHomePage> {
           ),
           data[i]['assetPath']);
 
+
       _markers[i.toString()] = Marker(
           markerId: MarkerId(i.toString()),
           position: data[i]['position'],
           icon: markerIcon,
           // consumeTapEvents: true,
           onTap: (){
-            goToPark(i.toString());
             setState(() {
+              MainHomePage.id1 = int.parse(data[i]['id']);
+
             });
-            if (i.toString() == '1'){
-              setState(() {
-                MainHomePage.id1 = i;
-              });
+            goToPark(i.toString());
+
+            if (i.toString() == '0'){
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.green.shade100,
@@ -191,13 +181,11 @@ class _MainHomePageState extends State<MainHomePage> {
                   ),
                 ),
               );
-            }  else if (i.toString() == '2'){
-              setState(() {
-                MainHomePage.id1 = i;
-              });
+            }  else if (i.toString() == '1'){
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: Colors.green.shade100,
+                  backgroundColor: Colors.orangeAccent.shade100,
                   duration: Duration(seconds: 3),
                   showCloseIcon: true,
                   closeIconColor: Colors.white,
@@ -225,13 +213,11 @@ class _MainHomePageState extends State<MainHomePage> {
                   ),
                 ),
               );
-            } else if (i.toString() == '3') {
-              setState(() {
-                MainHomePage.id1 = i;
-              });
+            } else if (i.toString() == '2') {
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: Colors.green.shade100,
+                  backgroundColor: Colors.red.shade100,
                   duration: Duration(seconds: 3),
                   showCloseIcon: true,
                   closeIconColor: Colors.white,
@@ -244,15 +230,15 @@ class _MainHomePageState extends State<MainHomePage> {
                         style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: Colors.red,
                         ),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'The Parking Lot is Full',
+                        'The Parking Lot is Full, no space available',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
-                          color: Colors.green.shade400,
+                          color: Colors.red.shade400,
                         ),
                       ),
                     ],
@@ -268,6 +254,7 @@ class _MainHomePageState extends State<MainHomePage> {
       setState(() {
 
       });
+
     }
   }
 

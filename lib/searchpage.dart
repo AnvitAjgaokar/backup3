@@ -5,8 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sem5demo3/client.dart';
 import 'package:sem5demo3/parkobject.dart';
+import 'package:sem5demo3/parkobjectthree.dart';
 
 class SearchPage extends StatefulWidget {
+  static String serpname ='';
   const SearchPage({Key? key}) : super(key: key);
 
   @override
@@ -19,6 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   List<dynamic> _parkingspot = [];
 
   bool _isResultvisible = false;
+  dynamic pname;
 
   final String getParkingspotQuery = r'''
     query {
@@ -52,9 +55,13 @@ class _SearchPageState extends State<SearchPage> {
       itemBuilder: (context, index) {
         final spot = _parkingspot[index];
         final spotid = spot['id'];
+        pname = spot['name'];
         return GestureDetector(
           onTap: (){
-            // Get.to(() => ParkLotObject(),arguments: spotid,
+            setState(() {
+              SearchPage.serpname = pname;
+            });
+            // Get.to(() => ParkingThree(),
             //     transition: Transition.cupertinoDialog, duration: Duration(seconds: 1));
           },
           child: Card( // Wrap the ListTile with a Card

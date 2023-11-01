@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:sem5demo3/animations/summaryanimation.dart';
 import 'package:sem5demo3/selectvehicle.dart';
 import 'package:sem5demo3/summary.dart';
 import 'package:sem5demo3/ticket.dart';
@@ -436,7 +437,7 @@ class _ParkingSpotSelectionState extends State<ParkingSpotSelection> {
                       );
                     } else {
                       _updateParkdetails();
-                      Get.to(SummaryPage());
+                      Get.to(SummaryAnimation());
 
                     }
                   },

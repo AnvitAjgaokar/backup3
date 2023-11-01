@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,6 +27,7 @@ class _ParkingOneState extends State<ParkingOne> {
 
   dynamic _name;
   dynamic _address;
+  dynamic fullphotodet;
 
 
   Future<void> _createDetails() async {
@@ -34,12 +37,13 @@ class _ParkingOneState extends State<ParkingOne> {
 
     final String createDetailtMutation = '''
       mutation () {
-        createParkingdetail(fireid: "${mainfireid.toString()}", todaydate: "${mainnow.toString()}", parkingname: "${_name.toString()}", address: "${_address.toString()}") {
+        createParkingdetail(fireid: "${mainfireid.toString()}", todaydate: "${mainnow.toString()}", parkingname: "${_name.toString()}", address: "${_address.toString()}", displayphoto: "${fullphotodet.toString()}") {
           parkingdetail {
             id
             fireid
             parkingname
             address
+            displayphoto
      
 
           }
@@ -150,6 +154,7 @@ class _ParkingOneState extends State<ParkingOne> {
         valet
         description
         rate
+        displayphoto
       }
     }
   ''';
@@ -161,6 +166,9 @@ class _ParkingOneState extends State<ParkingOne> {
 
   Map<String, dynamic> datalist = {};
 
+  dynamic halfphoto;
+  dynamic fullphoto;
+
   Future<void> _createSaved() async {
     print("Creating Saved");
 
@@ -168,11 +176,13 @@ class _ParkingOneState extends State<ParkingOne> {
 
     final String createWalletMutation = '''
       mutation () {
-        createSaved(fireid:"${mainfireid}",spotname:"${_name.toString()}", spotaddress: "${_address.toString()}") {
+        createSaved(fireid:"${mainfireid}",spotname:"${_name.toString()}", spotaddress: "${_address.toString()}", displayphoto: "${fullphoto.toString()}", parkid: "${parkid.toString()}") {
           save {
             id
             spotname
             spotaddress
+            displayphoto
+            parkid
      
 
           }
@@ -232,6 +242,8 @@ class _ParkingOneState extends State<ParkingOne> {
   DateTime now = DateTime.now();
   dynamic mainnow;
 
+  dynamic parkid = MainHomePage.id1;
+
   // Format the date as 'DD-MM-YYYY'
 
 
@@ -282,30 +294,49 @@ class _ParkingOneState extends State<ParkingOne> {
                 children: [
                   Container(
                     height: 170,
-                    child: PageView.builder(
-                      // allowImplicitScrolling: true,
-                      // controller: _pageController,
-                      itemCount: imageUrls.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: SvgPicture.asset(
-                              imageUrls[index],
-                              height: 170,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child:Query(
+                          options: QueryOptions(
+                            document: gql(parkingSpotDeatil),
+                            // variables: {'id': NewAcountone.idvaluee},
+                            variables: {'id':MainHomePage.id1},
+
+                          ),
+                          builder: (QueryResult result, {fetchMore, refetch}) {
+                            if (result.hasException) {
+                              print(result.exception.toString());
+                              return Center(
+                                child: Text(
+                                    'Error fetching UserName: ${result.exception.toString()}'),
+                              );
+                            }
+
+                            if (result.isLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.transparent,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              );
+                            }
+
+                            datalist = result.data?['parkingspotbyid'] ?? [];
+                            halfphoto  = datalist['displayphoto'];
+
+
+                            return Image(
+                              image: NetworkImage("${httpImage}/media/${halfphoto.toString()}"),
                               width: double.infinity,
                               fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      },
-                      onPageChanged: (int index) {
-                        setState(() {
-                          _currentPageIndex = index;
-                        });
-                      },
-                    ),
+                            );
+                          },
+
+                        ),
+                      ),
+                    )
                   ),
                   // Positioned(
                   //   bottom: 10.0,
@@ -339,7 +370,7 @@ class _ParkingOneState extends State<ParkingOne> {
                 title:Query(
                   options: QueryOptions(
                     document: gql(parkingSpotDeatil),
-                    variables: {'id': 1},
+                    variables: {'id': MainHomePage.id1},
                   ),
                   builder: (QueryResult result, {fetchMore, refetch}) {
                     if (result.hasException) {
@@ -383,7 +414,7 @@ class _ParkingOneState extends State<ParkingOne> {
                 subtitle: Query(
                   options: QueryOptions(
                     document: gql(parkingSpotDeatil),
-                    variables: {'id': 1},
+                    variables: {'id': MainHomePage.id1},
                   ),
                   builder: (QueryResult result, {fetchMore, refetch}) {
                     if (result.hasException) {
@@ -431,7 +462,9 @@ class _ParkingOneState extends State<ParkingOne> {
                       mainfireid = fireid;// Toggle the saved state
                     });
                     if (_isSaved){
+                      fullphoto = "${httpImage}/media/${halfphoto.toString()}";
                       _createSaved();
+                      print("id ${MainHomePage.id1}");
                     }
 
                     if (_isSaved==false){
@@ -469,7 +502,7 @@ class _ParkingOneState extends State<ParkingOne> {
                         Query(
                           options: QueryOptions(
                             document: gql(parkingSpotDeatil),
-                            variables: {'id': 1},
+                            variables: {'id': MainHomePage.id1},
                           ),
                           builder: (QueryResult result, {fetchMore, refetch}) {
                             if (result.hasException) {
@@ -523,7 +556,7 @@ class _ParkingOneState extends State<ParkingOne> {
                         Query(
                           options: QueryOptions(
                             document: gql(parkingSpotDeatil),
-                            variables: {'id': 1},
+                            variables: {'id': MainHomePage.id1},
                           ),
                           builder: (QueryResult result, {fetchMore, refetch}) {
                             if (result.hasException) {
@@ -580,7 +613,7 @@ class _ParkingOneState extends State<ParkingOne> {
                         Query(
                           options: QueryOptions(
                             document: gql(parkingSpotDeatil),
-                            variables: {'id': 1},
+                            variables: {'id': MainHomePage.id1},
                           ),
                           builder: (QueryResult result, {fetchMore, refetch}) {
                             if (result.hasException) {
@@ -644,7 +677,7 @@ class _ParkingOneState extends State<ParkingOne> {
                         child: Query(
                           options: QueryOptions(
                             document: gql(parkingSpotDeatil),
-                            variables: {'id': 1},
+                            variables: {'id': MainHomePage.id1.toString()},
                           ),
                           builder: (QueryResult result, {fetchMore, refetch}) {
                             if (result.hasException) {
@@ -702,7 +735,7 @@ class _ParkingOneState extends State<ParkingOne> {
                         Query(
                           options: QueryOptions(
                             document: gql(parkingSpotDeatil),
-                            variables: {'id': 1},
+                            variables: {'id': MainHomePage.id1.toString()},
                           ),
                           builder: (QueryResult result, {fetchMore, refetch}) {
                             if (result.hasException) {
@@ -798,6 +831,7 @@ class _ParkingOneState extends State<ParkingOne> {
                           mainfireid = fireid;
                           mainnow= formattedDate.toString();
                           ParkingOne.nameee = _name;
+                          fullphotodet = "${httpImage}/media/${halfphoto.toString()}";
                         });
                         _createDetails();
                       },

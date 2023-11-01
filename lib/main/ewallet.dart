@@ -364,7 +364,7 @@ class _EwalletState extends State<Ewallet> {
                                       padding: const EdgeInsets.only(left: 20, right: 20),
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          Navigator.pop(context);
+                                          // Navigator.pop(context);
 
                                           var options = {
                                             'key': 'rzp_test_srxx5ZiaXSlqeq',
@@ -447,6 +447,7 @@ class _EwalletState extends State<Ewallet> {
 
       ),
     );
+
   }
 
   @override

@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sem5demo3/addvehicle.dart';
 import 'package:sem5demo3/animations/loading%20animation.dart';
+import 'package:sem5demo3/bars/MainSummary%20Page.dart';
+import 'package:sem5demo3/bars/barhome.dart';
+import 'package:sem5demo3/cahrts.dart';
 import 'package:sem5demo3/client.dart';
 import 'package:sem5demo3/main/ewallet.dart';
 import 'package:sem5demo3/sign%20_in_up/newacc.dart';
@@ -22,14 +25,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
+  dynamic _profilephoto;
+
   final String userDeatil = r'''
     query ($fireid: String!){
       usersbyfireid(fireid: $fireid) {
         username
         email
+        profilephoto
       }
     }
   ''';
+
+
+
 
   Map<String, dynamic> datalist = {};
 
@@ -79,10 +88,49 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Center(
                 child: Column(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage("assets/logos/chamu.jpeg"),
-                      radius: 70,
+                    // const CircleAvatar(
+                    //   backgroundImage: AssetImage("assets/logos/chamu.jpeg"),
+                    //   radius: 70,
+                    //
+                    //
+                    // ),
 
+                    Query(
+                      options: QueryOptions(
+                        document: gql(userDeatil),
+                        // variables: {'id': NewAcountone.idvaluee},
+                        variables: {'fireid':fireid},
+
+                      ),
+                      builder: (QueryResult result, {fetchMore, refetch}) {
+                        if (result.hasException) {
+                          print(result.exception.toString());
+                          return Center(
+                            child: Text(
+                                'Error fetching UserName: ${result.exception.toString()}'),
+                          );
+                        }
+
+                        if (result.isLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.transparent,
+                              backgroundColor: Colors.transparent,
+                            ),
+                          );
+                        }
+
+                        datalist = result.data?['usersbyfireid'] ?? [];
+                        _profilephoto  = datalist['profilephoto'];
+
+
+                        return CircleAvatar(
+                          backgroundImage: NetworkImage("${httpImage}/media/${_profilephoto.toString()}"),
+                          radius: 70,
+
+
+                        );
+                      },
 
                     ),
                     const SizedBox(height: 14,),
@@ -200,7 +248,10 @@ class _ProfilePageState extends State<ProfilePage> {
               title: Text("Summary",style: GoogleFonts.poppins(fontSize: 18),),
               leading: const Icon(Icons.bar_chart_rounded,size: 35,),
               onTap: () {
-                FirebaseAuth.instance.signOut();
+                Get.to(() =>  MainSummaryPage(),
+                    transition: Transition.cupertinoDialog, duration: const Duration(seconds: 1));
+
+                // print("${httpImage}/media/${_profilephoto.toString()}");
                 // Handle List Tile 3 tap
               },
             ),
@@ -229,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     context: context,
                     builder: (BuildContext context){
                       return SizedBox(
-                        height: 200,
+                        height: 250,
                         child: Center(
                           child: Column(
                             children: [

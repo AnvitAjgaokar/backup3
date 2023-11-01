@@ -23,7 +23,7 @@ class _UserCheckState extends State<UserCheck> {
               return MainPage();
             }
             else{
-              return AuthPage();
+              return LoginPage();
             }
           }),
     );

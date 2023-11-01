@@ -3,7 +3,6 @@ import 'package:lottie/lottie.dart';
 
 class LoadingPageOne extends StatefulWidget {
   const LoadingPageOne({Key? key}) : super(key: key);
-
   @override
   State<LoadingPageOne> createState() => _LoadingPageOneState();
 }

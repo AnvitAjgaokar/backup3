@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sem5demo3/main/ewallet.dart';
 import 'package:sem5demo3/main/mainpage.dart';
 import 'package:sem5demo3/parkobject.dart';
@@ -28,6 +29,10 @@ class _SummaryPageState extends State<SummaryPage> {
   dynamic wallid;
   dynamic mainbal;
   dynamic maindetid;
+
+  final _razorpay = Razorpay();
+  dynamic val = 0;
+  int count = 0;
 
   final String parkingDeatil = r'''
     query ($id: String!){
@@ -217,12 +222,43 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 18.w,
                                 ),
-                                Text("${datalist['parkingname']}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistname = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalistname['parkingname']}",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
                               ],
                             ),
                           ),
@@ -243,12 +279,44 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 7.w,
                                 ),
-                                Text("${datalist['address']}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistaddress = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalistaddress['address']}",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -267,14 +335,46 @@ class _SummaryPageState extends State<SummaryPage> {
                                       fontSize: 13,
                                     )),
                                 SizedBox(
-                                  width: 18.w,
+                                  width: 14.w,
                                 ),
-                                Text("${datalist['vehiclename']}(${datalist['vehiclenum']})",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistvehicle = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalistvehicle['vehiclename']}(${datalistvehicle['vehiclenum']})",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -295,12 +395,44 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 25.w,
                                 ),
-                                Text("${datalist['floornum']}(${datalist['spotnum']})",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistspot = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalistspot['floornum']}(${datalistspot['spotnum']})",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -321,12 +453,44 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 38.w,
                                 ),
-                                Text("${datalist['selecteddate']}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistselecteddate = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalistselecteddate['selecteddate']}",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -347,12 +511,44 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 35.w,
                                 ),
-                                Text("${datalist['duration']} hours",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistduration = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalistduration['duration']} hours",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -373,12 +569,44 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 23.w,
                                 ),
-                                Text("${datalist['starthour']}-${datalist['endhour']}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalisthours = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("${datalisthours['starthour']}-${datalisthours['endhour']}",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -399,12 +627,44 @@ class _SummaryPageState extends State<SummaryPage> {
                                 SizedBox(
                                   width: 49.w,
                                 ),
-                                Text("₹${datalist['totalcost']}",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                Query(
+                                  options: QueryOptions(
+                                    document: gql(parkingDeatil),
+                                    // variables: {'id': NewAcountone.idvaluee},
+                                    variables: {'id': SelectVehicle.maindetailiddd.toString()},
+
+                                  ),
+                                  builder: (QueryResult result, {fetchMore, refetch}) {
+                                    if (result.hasException) {
+                                      print(result.exception.toString());
+                                      return Center(
+                                        child: Text(
+                                            'Error fetching UserName: ${result.exception.toString()}'),
+                                      );
+                                    }
+
+                                    if (result.isLoading) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
+                                        ),
+                                      );
+                                    }
+
+                                    Map<String, dynamic> datalistcost = result.data?['parkingdetailbyid'] ?? [];
+
+
+                                    return Text("₹${datalistcost['totalcost']}",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ));
+                                  },
+
+                                ),
+
                               ],
                             ),
                           ),
@@ -449,7 +709,7 @@ class _SummaryPageState extends State<SummaryPage> {
                                         endIndent: 140,
                                       ),
 
-                                      Text("Confirm Booking?",style: GoogleFonts.poppins(fontSize: 22,fontWeight: FontWeight.bold,),),
+                                      Text("Confirm Booking using wallet?",style: GoogleFonts.poppins(fontSize: 22,fontWeight: FontWeight.bold,),),
                                       Divider(
                                         color: Colors.grey.shade300,
                                         thickness: 2,
@@ -600,11 +860,52 @@ class _SummaryPageState extends State<SummaryPage> {
                         elevation: 9,
                       ),
                       child: Text(
-                        'Confirm Booking',
+                        'Confirm Booking using ewallet',
                         style: GoogleFonts.poppins(fontSize: 16),
                       ),
                     ),
                   ),
+
+                  SizedBox(height: 15,),
+
+                  //
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: 45,
+                  //   padding: EdgeInsets.only(left: 20, right: 20),
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       print(totalcost);
+                  //       var options = {
+                  //         'key': 'rzp_test_srxx5ZiaXSlqeq',
+                  //         'amount':int.parse(totalcost)*100,
+                  //         'name': 'Bepark',
+                  //         // 'order_id': 'order_EMBFqjDHEEn80l',
+                  //         'description': 'Ewallet Recharge',
+                  //         'prefill': {
+                  //           'contact': '9619191966',
+                  //           'email': 'anvitajgaokar14@gmail.com'
+                  //         }
+                  //       };
+                  //
+                  //       try{
+                  //         _razorpay.open(options);
+                  //       } on Exception catch(e){
+                  //         print("Error is : ${e}");
+                  //       }
+                  //
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       shape: StadiumBorder(),
+                  //       backgroundColor: Colors.blueAccent.shade700,
+                  //       elevation: 9,
+                  //     ),
+                  //     child: Text(
+                  //       'Confirm Booking using other methods',
+                  //       style: GoogleFonts.poppins(fontSize: 14),
+                  //     ),
+                  //   ),
+                  // ),
 
                   Query(
                     options: QueryOptions(
@@ -684,4 +985,141 @@ class _SummaryPageState extends State<SummaryPage> {
         )
     );
   }
+
+  @override
+  void initState(){
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
+    super.initState();
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+
+    // Do something when payment succeeds
+    setState(() {
+      count = 1;
+      // val = val + int.parse(_walletController.text.trim());
+    });
+    _updateWallet();
+    Navigator.pop(context);
+
+
+
+
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green.shade100,
+        duration: const Duration(seconds: 6),
+        showCloseIcon: true,
+        closeIconColor: Colors.white,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              'Payment Successful',
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Your booking has been done',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.green.shade400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red.shade100,
+        duration: Duration(seconds: 6),
+        showCloseIcon: true,
+        closeIconColor: Colors.white,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              'Payment Failed',
+
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Booking failed',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.red.shade400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    // _razorpay.clear(); // Removes all listeners
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.yellow.shade100,
+        duration: Duration(seconds: 6),
+        showCloseIcon: true,
+        closeIconColor: Colors.white,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              'External Wallet Used',
+
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.yellow,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${response.walletName} wallet was used for transaction',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.yellow.shade400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  @override
+  void dispose() {
+    _razorpay.clear(); // Removes all listeners
+    super.dispose();
+  }
+
 }
+
+

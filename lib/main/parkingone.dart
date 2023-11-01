@@ -35,7 +35,9 @@ class _MainParkingPageState extends State<MainParkingPage>
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: false,
+        extendBody: false,
         appBar: AppBar(
+
           title: Text(
             'My Parking',
             style: GoogleFonts.poppins(color: Colors.black, fontSize: 20),
@@ -190,6 +192,7 @@ class _MainParkingPageState extends State<MainParkingPage>
             ),
             Tab(
               child: Container(
+                width:30.w,
                 decoration: BoxDecoration(
                   color: controller.index == 1
                       ? Colors.blueAccent.shade700
@@ -198,9 +201,10 @@ class _MainParkingPageState extends State<MainParkingPage>
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   child: Text(
-                    'Done',
+                    'done',
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                       fontSize: 11,
                       color: controller.index == 1
@@ -235,7 +239,10 @@ class _MainParkingPageState extends State<MainParkingPage>
               ),
             ),
 
-          ]),
+          ],
+            indicator: BoxDecoration(
+              color: Colors.transparent,
+            ),),
 
           // completed tab
         ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sem5demo3/animations/bookedanimation.dart';
 import 'package:sem5demo3/animations/savedanimation.dart';
 import 'package:sem5demo3/main/mainhompage.dart';
 import 'package:sem5demo3/main/mainprofile.dart';
 import 'package:sem5demo3/main/parkingone.dart';
-import 'package:sem5demo3/main/saved.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
     return [
       const MainHomePage(),
       const SavedLoadingPageOne(),
-      const MainParkingPage(),
+      const BookedLoadingPageOne(),
       const ProfilePage(),
     ];
   }
@@ -67,12 +67,14 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       bottomNavigationBar: PersistentTabView(
         context,
         controller: _controller,
         navBarHeight: 55,
         screens: _buildScreens(),
         items: _navBarsItems(),
+        bottomScreenMargin: 0,
         confineInSafeArea: true,
         backgroundColor: Colors.white, // Default is Colors.white.
         handleAndroidBackButtonPress: true, // Default is true.
